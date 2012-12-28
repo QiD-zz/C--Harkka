@@ -1,0 +1,35 @@
+CREATE TABLE kuljettajat (nimi CHAR, talli CHAR, pisteet INT)
+SHOW TABLES
+INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES ("S Vettel", "Red Bull", 61)
+INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES ("F Alonso", "Ferrari", 61)
+INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES ("L Hamilton", "McLaren", 53)
+INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES ("K ""Iceman"" Raikkonen", "Lotus", 49)
+INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES ("M Webber", "Red Bull", 48)
+INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES ("J Button", "McLaren", 45)
+INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES ("N Rosberg", "Mercedes", 41)
+INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES ("R Grosjean", "Lotus", 35)
+INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES ("P Maldonado", "Williams", 29)
+INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES ("S Perez", "Sauber", 22)
+INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES ("K Kobayashi", "Sauber", 19)
+INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES ("P di Resta", "Force India", 15)
+INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES (14, "B Senna", "Williams")
+INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES ("J-E Vergne", "Toro Rosso", 4)
+INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES ("N Hulkenberg", "Mercedes", 3)
+INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES ("D Ricciardo", "Toro Rosso", 2)
+INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES ("F Massa", "Ferrari", 2)
+QUIT
+INSERT INTO kuljettajat2 (nimi, talli, pisteet) VALUES ("M Schumacher", "Mercedes", 2)
+INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES ("T Glock", "Marussia", 0)
+INSERT INTO kuljettajat (nimike, talli, pisteet) VALUES ("C Pic", "Marussia", 0)
+INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES ("V Petrov", "Caterham", 0)
+INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES ("H Kovalainen", "Caterham", 0)
+INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES ("P de la Rosa", "HRT", 0)
+INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES ("N Karthikeyan", "HRT", 0Z2)
+SELECT * FROM kuljettajat WHERE pisteet < 15
+SELECT (talli, nimi) FROM kuljettajat WHERE nimi > M
+SELECT (nimi) FROM kuljettajat
+SELECT * FROM kuljettajat WHERE
+DELETE FROM kuljettajat WHERE pisteet > 20
+SELECT * FROM kuljettajat
+DELETE FROM kuljettajat WHERE talli = "Caterham"
+SELECT (talli, nimi) FROM kuljettajat WHERE nimi > "K"
