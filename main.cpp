@@ -238,14 +238,22 @@ int main(int argc, char** argv) {
                    
                 //   suurennaKasky(kasky);
                    bool virheHavaittu = false;
+                   bool tauluOnOlemassa = true;
                    if (db.onkoTaulua(taulunNimi) == false)
                    {
                        virheHavaittu = true;
+                       tauluOnOlemassa = false;
+                       cout << "taulua ei ole??????\n";
                    }
 
-                   Taulu taulu = db.haeTaulu(taulunNimi);
+                   Taulu taulu;
+                   vector <Otsake *> taulunSarakkeet;
+                   if (tauluOnOlemassa)
+                   {
+                      taulu = db.haeTaulu(taulunNimi);
+                      taulunSarakkeet = taulu.kerroSarakkeet();
+                   }
                    
-                   vector <Otsake *> taulunSarakkeet = taulu.kerroSarakkeet();
                    vector <Otsake *> uudetSarakkeet;
                    if (kasky == VALUES)     
                    { 
@@ -282,15 +290,23 @@ int main(int argc, char** argv) {
                                arvo = arvo.substr(1, arvo.size());
                                string mjono;
                                bool jatkuu = true;
+        /*                       if (mjono[mjono.size()-1] == ',')               
+                                    {
+                                        mjono = mjono.substr(0, mjono.size()-1);                             
+                                    }*/
                                if (arvo[arvo.size()-1] == '"')
                                {
+                                   arvo = arvo.substr(0, arvo.size()-1);
                                    jatkuu = false;
                                }
 
-                               arvo.append(" ");
+                               
                                while (jatkuu)
                                {
+                                   arvo.append(" ");
                                    tiedosto >> mjono;
+                                   kokoKasky.append(" ");
+                                   kokoKasky.append(mjono);
                                   if (mjono[mjono.size()-1] == ',')               
                                     {
                                         mjono = mjono.substr(0, mjono.size()-1);                             
@@ -334,7 +350,7 @@ int main(int argc, char** argv) {
                             }
                            }
 
-                           if (kierros < taulunSarakkeet.size()) {
+                           if ((kierros < sarakkeidenNimet.size()) && tauluOnOlemassa) {
                                 if (!eiFloat && eiInt)
                                 {
                                     cout << arvo;
@@ -398,15 +414,19 @@ int main(int argc, char** argv) {
                        {
                            throw Virhekomento(kokoKasky);
                        }
-                       taulu.lisaaRivi(uudetSarakkeet);
-                       db.muutaTaulua(taulu);
+                       if (!virheHavaittu)
+                       {
+                           taulu.lisaaRivi(uudetSarakkeet);
+                           db.muutaTaulua(taulu);
+                       }
+                       
                        kokoKasky = "";
                    }
                }
         }
         
             catch (Virhekomento &v)
-            {
+            {               
                 tiedostoUlos << v.what();
                 tiedostoUlos << endl << endl;
                 kokoKasky = "";

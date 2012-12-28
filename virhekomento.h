@@ -23,6 +23,7 @@ public:
 
         string paluu("Illegal command: ");
         paluu.append(viesti);
+        cout << paluu << endl;
         return paluu.c_str();
     }
 };

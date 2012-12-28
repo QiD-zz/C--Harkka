@@ -29,6 +29,10 @@ class Taulu
     int sarakkeita;
     
     public:
+    Taulu()
+    {
+        koko = 0;
+    }
     Taulu(string name): nimi(name)
     {
         koko = 0;
@@ -39,6 +43,11 @@ class Taulu
 
         sarakkeet = sarkat;
     }
+     
+     Taulu(const Taulu &toinen): nimi(toinen.nimi), koko(toinen.koko), sarakkeita(toinen.sarakkeita), sarakkeet(toinen.sarakkeet), rivit(toinen.rivit)
+     {
+         
+     }
      
   /*  Taulu(string name, Otsake *sarkat, int leveys): nimi(name), sarakkeet(sarkat)
     {
