@@ -15,7 +15,7 @@ using namespace std;
 
 class Tietokanta
 {
-    list<Taulu> taulut;   
+    list<Taulu *> taulut;   
     list<string> nimet;
 public:
     Tietokanta(): taulut(), nimet()
@@ -23,12 +23,12 @@ public:
         
     }
     
-    void lisaaTaulu(Taulu t)
+    void lisaaTaulu(Taulu * &t)
     {
         bool onkoJo = false;
-        for (list<Taulu>::iterator it = taulut.begin() ; it != taulut.end(); it++) {
-            Taulu i = it.operator *();
-            if (i.kerroNimi() == t.kerroNimi())
+        for (list<Taulu *>::iterator it = taulut.begin() ; it != taulut.end(); it++) {
+            Taulu *i = it.operator *();
+            if (i->kerroNimi() == t->kerroNimi())
             {
                 onkoJo = true;
             }
@@ -36,23 +36,23 @@ public:
         if (onkoJo)
         {
             taulut.remove(t);
-            nimet.remove(t.kerroNimi());
+            nimet.remove(t->kerroNimi());
             taulut.push_back(t);
-            nimet.push_back(t.kerroNimi());
+            nimet.push_back(t->kerroNimi());
         }
         else
         {
             taulut.push_back(t);
-            nimet.push_back(t.kerroNimi());
+            nimet.push_back(t->kerroNimi());
         }
         
     }
     
     void poistaTaulu(string nimi)
     {
-        for (list<Taulu>::iterator it = taulut.begin() ; it != taulut.end(); it++) {
-            Taulu i = it.operator *();
-            if (i.kerroNimi() == nimi)
+        for (list<Taulu *>::iterator it = taulut.begin() ; it != taulut.end(); it++) {
+            Taulu *i = it.operator *();
+            if (i->kerroNimi() == nimi)
             {
               //  Taulu poistettava = taulut[i];
                 taulut.remove(i);
@@ -65,7 +65,7 @@ public:
         return taulut.size();
     }
     
-    void muutaTaulua(Taulu t)
+    void muutaTaulua(Taulu * &t)
     {
         taulut.remove(t);
         taulut.push_back(t);
@@ -87,11 +87,11 @@ public:
     {
         if (onkoTaulua(nimi))
         {
-            for (list<Taulu>::iterator it = taulut.begin() ; it != taulut.end(); it++) {
-                Taulu i = it.operator *();
-                if (i.kerroNimi() == nimi)
+            for (list<Taulu *>::iterator it = taulut.begin() ; it != taulut.end(); it++) {
+                Taulu *i = it.operator *();
+                if (i->kerroNimi() == nimi)
                 {
-                    return i;
+                    return *i;
                 }
             }
         }

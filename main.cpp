@@ -29,6 +29,11 @@ string const FROM = "FROM";
 string const WHERE = "WHERE";
 string const QUIT = "QUIT";
 string const TAHTI = "*";
+char const SULKUAUKI = '(';
+char const SULKUKIINNI = ')';
+char const HIPSUT = '"';
+string const TYHJA = " ";
+char const PILKKU = ',';
 
 void pienennaKasky(string &kasky)
 {
@@ -43,17 +48,17 @@ void suurennaKasky(string &kasky)
         kasky[i] = toupper(kasky[i]);       
     }
 }
-
+/*
 string etsiKasky(char rivi[])
 {
     int j = 0;
     string paluu("");
     for (int i = 0; i < 255; i++) {
-        if (rivi[i] == '(')
+        if (rivi[i] == SULKUAUKI)
         {
             i++;
         }
-        if (rivi[i] == ' ' || rivi[i] == ',' || rivi[i] == ')')
+        if (rivi[i] == TYHJA || rivi[i] == PILKKU || rivi[i] == SULKUKIINNI)
         {
             break;
         }
@@ -69,7 +74,7 @@ string etsiKasky(char rivi[])
 
     }
 
-}
+}*/
 
 
 int main(int argc, char** argv) {
@@ -82,6 +87,7 @@ int main(int argc, char** argv) {
     string kokoKasky;
     string rivi;
     Tietokanta db;
+    char *arvoc;
     ifstream tiedosto(argv[1]);   
     ofstream tiedostoUlos(argv[2]);
    /* while (tiedosto >> rivi)
@@ -100,7 +106,7 @@ int main(int argc, char** argv) {
         {
             tiedosto >> kasky;
       //      suurennaKasky(kasky);
-            kokoKasky.append(" ");
+            kokoKasky.append(TYHJA);
             kokoKasky.append(kasky);
             
             if (kasky == TABLE)
@@ -108,56 +114,57 @@ int main(int argc, char** argv) {
                 vector < Otsake *> sarakkeet;
                 bool sarakkeita = true;
                 tiedosto >> taulunNimi;
-                kokoKasky.append(" ");
+                kokoKasky.append(TYHJA);
                 kokoKasky.append(taulunNimi);
+                Taulu tauluName(taulunNimi);
 
                 while (sarakkeita == true)
                 {                                                    
                     tiedosto >> sarakeNimi;    
 
-                    kokoKasky.append(" ");
+                    kokoKasky.append(TYHJA);
                     kokoKasky.append(sarakeNimi);
 
-                    if (sarakeNimi[0] == '(')               
+                    if (sarakeNimi[0] == SULKUAUKI)               
                     {
                     sarakeNimi = sarakeNimi.substr(1, sarakeNimi.size()-1);                               
           
                     }
                     tiedosto >> tyyppi;  
-                    kokoKasky.append(" ");
+                    kokoKasky.append(TYHJA);
                     kokoKasky.append(tyyppi);
                   
-                    if (tyyppi[tyyppi.size()-1] == ',')
+                    if (tyyppi[tyyppi.size()-1] == PILKKU)
                     {
                         tyyppi = tyyppi.substr(0, tyyppi.size()-1);
                     }
-                     if (tyyppi[tyyppi.size()-1] == ')')
+                     if (tyyppi[tyyppi.size()-1] == SULKUKIINNI)
                     {
                         tyyppi = tyyppi.substr(0, tyyppi.size()-1);
                         sarakkeita = false;
                     }
                     if (tyyppi == INT)
                     {
-                        sarakkeet.push_back(new Sarake<int>(sarakeNimi, taulunNimi));
+                        sarakkeet.push_back(new Sarake<int>(tauluName, sarakeNimi));
                     }
                     if (tyyppi == FLOAT)
                     {
-                        sarakkeet.push_back(new Sarake<float>(sarakeNimi, taulunNimi));
+                        sarakkeet.push_back(new Sarake<float>(tauluName, sarakeNimi));
                     }
                     if (tyyppi == CHAR)
                     {
-                        sarakkeet.push_back(new Sarake<char *>(sarakeNimi, taulunNimi));
+                        sarakkeet.push_back(new Sarake<char *>(tauluName, sarakeNimi));
                     }
 
                 }
-                Taulu *taulu = new Taulu(taulunNimi,sarakkeet, sarakkeet.size());
-                for (int i = 0; i < sarakkeet.size(); i++) {
+                Taulu *taulu = new Taulu(taulunNimi, sarakkeet, sarakkeet.size());
+               /* for (int i = 0; i < sarakkeet.size(); i++) {
                     cout << "TÄSSÄ TEHDÄÄN " << sarakkeet[i]->kerroTyyppi() << endl;
 
 
-                }
+                }*/
 
-                db.lisaaTaulu(*taulu);
+                db.lisaaTaulu(taulu);
                 kokoKasky = "";
             }
         }
@@ -191,8 +198,8 @@ int main(int argc, char** argv) {
         {              
             tiedosto >> kasky;
           //  suurennaKasky(kasky);
-             cout << kasky << endl;
-            kokoKasky.append(" "); 
+          //   cout << kasky << endl;
+            kokoKasky.append(TYHJA); 
             kokoKasky.append(kasky);
                
             try
@@ -200,40 +207,40 @@ int main(int argc, char** argv) {
                if (kasky == INTO)      
                { 
                    tiedosto >> taulunNimi;   
-                   kokoKasky.append(" ");
+                   kokoKasky.append(TYHJA);
                    kokoKasky.append(taulunNimi);
-                   cout << kasky << endl;
+                 //  cout << kasky << endl;
                    bool sarakkeita = true;
                    vector <string> sarakkeidenNimet;
                    while (sarakkeita)
                    {                             
                        tiedosto >> sarakeNimi;   
-                       cout << sarakeNimi << endl;
-                       kokoKasky.append(" ");
+                     //  cout << sarakeNimi << endl;
+                       kokoKasky.append(TYHJA);
                        kokoKasky.append(sarakeNimi);
                        
-                       if (sarakeNimi[0] == '(')               
+                       if (sarakeNimi[0] == SULKUAUKI)               
                        {
-                       sarakeNimi = sarakeNimi.substr(1, sarakeNimi.size());
-
-
+                          sarakeNimi = sarakeNimi.substr(1, sarakeNimi.size());
                        }
-                       if (sarakeNimi[sarakeNimi.length()-1] == ',')               
+                       
+                       if (sarakeNimi[sarakeNimi.length()-1] == PILKKU)               
                        {
-                       sarakeNimi = sarakeNimi.substr(0,sarakeNimi.size()-1);                                       
+                           sarakeNimi = sarakeNimi.substr(0,sarakeNimi.size()-1);                                       
                        }
-                       if (sarakeNimi[sarakeNimi.length()-1] == ')')               
+                       
+                       if (sarakeNimi[sarakeNimi.length()-1] == SULKUKIINNI)               
                        {
-                       sarakeNimi = sarakeNimi.substr(0,sarakeNimi.size()-1);
-                       sarakkeita = false;                                 
-
+                           sarakeNimi = sarakeNimi.substr(0,sarakeNimi.size()-1);
+                           sarakkeita = false;                                 
                        }
+                       
                        sarakkeidenNimet.push_back(sarakeNimi);
                    }
 
                    tiedosto >> kasky;   
-                   cout << kasky << endl;
-                   kokoKasky.append(" ");
+                //   cout << kasky << endl;
+                   kokoKasky.append(TYHJA);
                    kokoKasky.append(kasky);
                    
                 //   suurennaKasky(kasky);
@@ -243,7 +250,7 @@ int main(int argc, char** argv) {
                    {
                        virheHavaittu = true;
                        tauluOnOlemassa = false;
-                       cout << "taulua ei ole??????\n";
+                     //  cout << "taulua ei ole??????\n";
                    }
 
                    Taulu taulu;
@@ -263,29 +270,29 @@ int main(int argc, char** argv) {
                        bool arvojaOn = true;
                        while (arvojaOn == true)
                        {
-                           cout << "SARAKKEITA ON " << taulunSarakkeet.size() << endl;
+                     //      cout << "SARAKKEITA ON " << taulunSarakkeet.size() << endl;
                            tiedosto >> arvo;
-                           cout << arvo;
-                           kokoKasky.append(" ");
+                       //    cout << arvo;
+                           kokoKasky.append(TYHJA);
                            kokoKasky.append(arvo);
                              
-                           if (arvo[0] == '(')
+                           if (arvo[0] == SULKUAUKI)
                            {
                                arvo = arvo.substr(1, arvo.size());
                            }
-                           if (arvo[arvo.size()-1] == ',')               
+                           if (arvo[arvo.size()-1] == PILKKU)               
                            {
                                arvo = arvo.substr(0, arvo.size()-1);                             
                            }
-                           if (arvo[arvo.size()-1] == ')')
+                           if (arvo[arvo.size()-1] == SULKUKIINNI)
                            {
 
                                arvo = arvo.substr(0, arvo.size()-1);
-                                cout << arvo;
+                              // cout << arvo;
                                arvojaOn = false;
 
                            }
-                           if (arvo[0] == '"' && arvo[1] != '"')
+                           if (arvo[0] == HIPSUT && arvo[1] != HIPSUT)
                            {
                                arvo = arvo.substr(1, arvo.size());
                                string mjono;
@@ -294,51 +301,69 @@ int main(int argc, char** argv) {
                                     {
                                         mjono = mjono.substr(0, mjono.size()-1);                             
                                     }*/
-                               if (arvo[arvo.size()-1] == '"')
+                               if (arvo[arvo.size()-1] == HIPSUT)
                                {
-                                   arvo = arvo.substr(0, arvo.size()-1);
-                                   jatkuu = false;
+                                   if (arvo[arvo.size()-2] == HIPSUT)
+                                       {
+                                           arvo = arvo.substr(1, arvo.size()-1);
+                                       }
+                                       else
+                                       {
+                                            arvo = arvo.substr(0, arvo.size()-1);
+                                            jatkuu = false;
+                                       }
+                                   
                                }
 
                                
                                while (jatkuu)
                                {
-                                   arvo.append(" ");
+                                   arvo.append(TYHJA);
                                    tiedosto >> mjono;
-                                   kokoKasky.append(" ");
+                                   kokoKasky.append(TYHJA);
                                    kokoKasky.append(mjono);
-                                  if (mjono[mjono.size()-1] == ',')               
+                                   
+                                  if (mjono[mjono.size()-1] == PILKKU)               
                                     {
                                         mjono = mjono.substr(0, mjono.size()-1);                             
                                     }
                                    
-                                   if (mjono[mjono.size()-1] == '"')
+                                   if (mjono[mjono.size()-1] == HIPSUT)
                                    {
-                                       mjono = mjono.substr(0, mjono.size()-1);
-                                       jatkuu = false;
-                                       cout << mjono << endl;
+                                       if (mjono[mjono.size()-2] == HIPSUT)
+                                       {
+                                           mjono = mjono.substr(1, mjono.size()-2);
+                                       }
+                                       else
+                                       {
+                                            mjono = mjono.substr(0, mjono.size()-1);
+                                            jatkuu = false;
+                                       }
+                                      
+                                 //      cout << mjono << endl;
                                    }
 
                                    arvo.append(mjono);
                                }
-                               cout << arvo << endl;
+                          //     cout << arvo << endl;
 
                            }
-                           char *arvoc = const_cast<char *>(arvo.c_str());
+                           arvoc = const_cast<char *>(arvo.c_str());
+                           cout << "arvoc: " << arvoc << endl;
                            int luku;
                            float flotu;
                            bool eiInt = false;
                            bool eiFloat = false;
-                           cout << "Tähän päästään? " << kierros << endl;
+                         //  cout << "Tähän päästään? " << kierros << endl;
                            for (int i = 0; i < arvo.size(); i++) {
                                if (!isdigit(arvo[i]))
                                {
                                    eiInt = true;
                                }
-                               cout << arvo[i] << endl;
+                           //    cout << arvo[i] << endl;
 
                             }
-                           cout << "oliko int? " << eiInt << endl;
+                           //cout << "oliko int? " << eiInt << endl;
                            if (eiInt)
                            {
                                for (int i = 0; i < arvo.size(); i++) {
@@ -350,20 +375,24 @@ int main(int argc, char** argv) {
                             }
                            }
 
-                           if ((kierros < sarakkeidenNimet.size()) && tauluOnOlemassa) {
+                           if ((kierros < sarakkeidenNimet.size()) && tauluOnOlemassa)
+                           {
                                 if (!eiFloat && eiInt)
                                 {
-                                    cout << arvo;
+                                  //  cout << arvo;
                                     flotu = strtof(arvoc, NULL);
                                     if (taulunSarakkeet[kierros]->tutkiTyyppi(typeid(flotu).name()) != true)
                                     {
-
                                        virheHavaittu = true;
+                                    }
+                                    if (taulu.onkoSaraketta(sarakkeidenNimet[kierros]) == false)
+                                    {
+                                        virheHavaittu = true;
                                     }
                                     if (virheHavaittu == false)
                                     {
-                                        Sarake<float> *a = new Sarake<float>(flotu,sarakkeidenNimet[kierros], taulunNimi);
-                                    uudetSarakkeet.push_back(a);     
+                                       // Sarake<float> *a = new Sarake<float>(flotu,sarakkeidenNimet[kierros], taulunNimi);
+                                        uudetSarakkeet.push_back(new Sarake<float>(flotu, sarakkeidenNimet[kierros], taulu));     
                                     }
 
                                 } 
@@ -375,20 +404,24 @@ int main(int argc, char** argv) {
                                     intLuku = static_cast<int>(luku);
 
                                     bool ong = (taulunSarakkeet[kierros]->tutkiTyyppi(typeid(intLuku).name()))? true : false;
-                                    cout << "ong " << ong << endl;
+                              //      cout << "ong " << ong << endl;
                                   //  if (taulunSarakkeet[kierros]->tutkiTyyppi(typeid(intLuku).name())!= true)
                                     if (taulunSarakkeet[kierros]->tutkiTyyppi(typeid(intLuku).name())!= true)
                                     {
-                                        cout << "VIRHE INT\n";
+                               //         cout << "VIRHE INT\n";
                                        virheHavaittu = true;
                                     }
-                                    cout << " tässköin ?" << endl;
+                                    if (taulu.onkoSaraketta(sarakkeidenNimet[kierros]) == false)
+                                    {
+                                        virheHavaittu = true;
+                                    }
+                                 //   cout << " tässköin ?" << endl;
                                     if (virheHavaittu == false)
                                     {
 
-                                          Sarake<int> *a = new Sarake<int>(intLuku,sarakkeidenNimet[kierros], taulunNimi);
+                                     //     Sarake<int> *a = new Sarake<int>(intLuku,sarakkeidenNimet[kierros], taulunNimi);
 
-                                    uudetSarakkeet.push_back(a);
+                                        uudetSarakkeet.push_back(new Sarake<int>(intLuku, sarakkeidenNimet[kierros], taulu));
                                     }
 
                                 } 
@@ -396,14 +429,20 @@ int main(int argc, char** argv) {
                                 {                             
                                     if (taulunSarakkeet[kierros]->tutkiTyyppi(typeid(arvoc).name()) != true)
                                     {
-                                        cout << arvoc << "\n";
-                                        cout << "VIRHE CHAR " << typeid(arvoc).name() << " " << taulunSarakkeet[kierros]->kerroTyyppi() << "\n";
+                              //          cout << arvoc << "\n";
+                                //        cout << "VIRHE CHAR " << typeid(arvoc).name() << " " << taulunSarakkeet[kierros]->kerroTyyppi() << "\n";
+                                        virheHavaittu = true;
+                                    }
+                                    if (taulu.onkoSaraketta(sarakkeidenNimet[kierros]) == false)
+                                    {
                                         virheHavaittu = true;
                                     }
                                     if (virheHavaittu == false)
                                     {
-                                        Sarake<char *> *a = new Sarake<char *>(const_cast<char *>(arvoc),sarakkeidenNimet[kierros], taulunNimi);
-                                    uudetSarakkeet.push_back(a);
+                                       // Sarake<char *> *a = new Sarake<char *>(arvoc,sarakkeidenNimet[kierros], taulunNimi);
+                                      //  cout << "MIKÄ MÄTTTÖTÖTÖTÖTÖTÖTÖTÖT:   " << arvoc << endl;
+                                        char *arvi = const_cast<char *>(arvoc);
+                                        uudetSarakkeet.push_back(new Sarake<char *>(arvi, sarakkeidenNimet[kierros], taulu));
                                     }
                                 }
                            }
@@ -417,7 +456,8 @@ int main(int argc, char** argv) {
                        if (!virheHavaittu)
                        {
                            taulu.lisaaRivi(uudetSarakkeet);
-                           db.muutaTaulua(taulu);
+                           Taulu *p = &taulu;
+                           db.muutaTaulua(p);
                        }
                        
                        kokoKasky = "";
@@ -440,11 +480,63 @@ int main(int argc, char** argv) {
         }
             
         if (kasky == SELECT)
-        {              
+        {       
+            bool sarakkeita = true;
+            bool kaikkiSarakkeet = false;
+            vector <string> sarakkeidenNimet;
+            while (sarakkeita)
+            {                             
+                tiedosto >> sarakeNimi;   
+                if (sarakeNimi == TAHTI)
+                {
+                    kaikkiSarakkeet = true;
+                    sarakkeita = false;
+                }
+                kokoKasky.append(TYHJA);
+                kokoKasky.append(sarakeNimi);  
+                
+                if (sarakeNimi[0] == SULKUAUKI)
+                {              
+                    sarakeNimi = sarakeNimi.substr(1, sarakeNimi.size());
+                }
+                
+                if (sarakeNimi[sarakeNimi.length()-1] == PILKKU)               
+                {
+                sarakeNimi = sarakeNimi.substr(0,sarakeNimi.size()-1);                                       
+                }
+                
+                if (sarakeNimi[sarakeNimi.length()-1] == SULKUKIINNI)               
+                {
+                   sarakeNimi = sarakeNimi.substr(0,sarakeNimi.size()-1);
+                   sarakkeita = false;                                
+                }
+                
+                sarakkeidenNimet.push_back(sarakeNimi);
+            }
+  
+            
             tiedosto >> kasky;
-            if (kasky == TAHTI)
+            if (kasky == FROM)
             {
-                tiedostoUlos << "lol";
+                tiedosto >> taulunNimi; 
+                bool virheHavaittu = false;
+                bool tauluOnOlemassa = true;
+                if (db.onkoTaulua(taulunNimi) == false)
+                {
+                    virheHavaittu = true;
+                    tauluOnOlemassa = false;
+                }
+                Taulu taulu;
+                vector <Otsake *> taulunSarakkeet;
+                if (tauluOnOlemassa)
+                {
+                    taulu = db.haeTaulu(taulunNimi);
+                    taulunSarakkeet = taulu.kerroSarakkeet();
+                }
+                if (kaikkiSarakkeet)
+                {
+                    tiedostoUlos << taulu.tulostaSisalto();
+                }
             }
         }
         

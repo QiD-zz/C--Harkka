@@ -25,7 +25,7 @@ public:
         
     }
     
-    Otsake(std::string name): nimi(name)
+    Otsake(string &name): nimi(name)
     {   
 
     }

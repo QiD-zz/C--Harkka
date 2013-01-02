@@ -1,8 +1,8 @@
 kuljettajat
 
-Illegal command: INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES ("K ""Iceman"" Raikkonen", "Lotus", 49)
-
 Illegal command: INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES (14, "B Senna", "Williams")
 
 Illegal command: INSERT INTO kuljettajat2 (nimi, talli, pisteet) VALUES ("M Schumacher", "Mercedes", 2)
+
+Illegal command: INSERT INTO kuljettajat (nimike, talli, pisteet) VALUES ("C Pic", "Marussia", 0)
 

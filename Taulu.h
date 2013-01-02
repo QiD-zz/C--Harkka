@@ -33,20 +33,21 @@ class Taulu
     {
         koko = 0;
     }
-    Taulu(string name): nimi(name)
+    Taulu(string &name): nimi(name)
     {
         koko = 0;
     }
     
-     Taulu(string name, vector<Otsake *> sarkat, int leveys): nimi(name), koko(0), sarakkeita(leveys)
+     Taulu(string &name, vector<Otsake *> &sarkat, int leveys): nimi(name), koko(0), sarakkeita(leveys)
     {
 
         sarakkeet = sarkat;
     }
      
-     Taulu(const Taulu &toinen): nimi(toinen.nimi), koko(toinen.koko), sarakkeita(toinen.sarakkeita), sarakkeet(toinen.sarakkeet), rivit(toinen.rivit)
+     Taulu(const Taulu &toinen): nimi(toinen.nimi), koko(toinen.koko), sarakkeita(toinen.sarakkeita),  rivit(toinen.rivit)
      {
-         
+         // sarakkeet(toinen.sarakkeet),
+         sarakkeet = toinen.sarakkeet;
      }
      
   /*  Taulu(string name, Otsake *sarkat, int leveys): nimi(name), sarakkeet(sarkat)
@@ -64,12 +65,13 @@ class Taulu
             }
     }*/
     
-    void lisaaRivi(vector <Otsake *> rivi)
+    void lisaaRivi(vector <Otsake *> &rivi)
     {
-        cout << "TÄÄLLÄKÖ KUSEE??\n";
+     //   cout << "TÄÄLLÄKÖ KUSEE??\n";
         rivit.push_back(rivi);
         koko++;
-        cout << "mitk KUSEE??\n";
+
+      //  cout << "mitk KUSEE??\n";
      /*   if (koko > 0)
         {
             Otsake **temp = rivit;
@@ -115,6 +117,18 @@ class Taulu
     string kerroNimi()
     {
         return nimi;
+    }
+    
+    bool onkoSaraketta(string nimi)
+    {
+       for (vector< Otsake * >::iterator it = sarakkeet.begin(); it != sarakkeet.end(); it++) {
+            Otsake *sar = *it;
+            if (nimi == sar->nimi)
+            {
+                return true;
+            }
+        }
+       return false;
     }
     
     string tulostaSisalto()

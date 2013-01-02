@@ -22,6 +22,13 @@ INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES ("T Glock", "Marussia", 0)
 INSERT INTO kuljettajat (nimike, talli, pisteet) VALUES ("C Pic", "Marussia", 0)
 INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES ("V Petrov", "Caterham", 0)
 INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES ("H Kovalainen", "Caterham", 0)
-QUIT
 INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES ("P de la Rosa", "HRT", 0)
-
+SELECT * FROM kuljettajat
+QUIT
+DELETE FROM kuljettajat WHERE talli = "Caterham"
+SELECT (talli, nimi) FROM kuljettajat WHERE nimi > "K"
+SELECT * FROM kuljettajat WHERE pisteet < 15
+SELECT (talli, nimi) FROM kuljettajat WHERE nimi > M
+SELECT (nimi) FROM kuljettajat
+SELECT * FROM kuljettajat WHERE
+DELETE FROM kuljettajat WHERE pisteet > 20
