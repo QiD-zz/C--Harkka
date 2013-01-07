@@ -1,0 +1,28 @@
+kuljettajat
+
+Illegal command: INSERT INTO kuljettajat (nimi, talli, pisteet) VALUES (14, "B Senna", "Williams")
+
+Illegal command: INSERT INTO kuljettajat2 (nimi, talli, pisteet) VALUES ("M Schumacher", "Mercedes", 2)
+
+Illegal command: INSERT INTO kuljettajat (nimike, talli, pisteet) VALUES ("C Pic", "Marussia", 0)
+
+S VettelRed Bull      61
+F Alonso Ferrari      61
+      L Hamilton McLaren      53
+    K "Iceman" Raikkonen   Lotus      49
+M WebberRed Bull      48
+J Button McLaren      45
+       N RosbergMercedes      41
+      R Grosjean   Lotus      35
+     P MaldonadoWilliams      29
+ S Perez  Sauber      22
+     K Kobayashi  Sauber      19
+      P di Resta     Force India      15
+      J-E Vergne      Toro Rosso       4
+    N HulkenbergMercedes       3
+     D Ricciardo      Toro Rosso       2
+ F Massa Ferrari       2
+ T GlockMarussia       0
+V PetrovCaterham       0
+    H KovalainenCaterham       0
+    P de la Rosa     HRT       0

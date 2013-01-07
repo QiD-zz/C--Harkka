@@ -25,16 +25,16 @@ class Sarake: public Otsake
 {
     T arvo;
     Taulu taulu;
-    char * tyyppi;
+  //  char * tyyppi;
     
     public:
-        Sarake(T &arvo, string &namen, Taulu &taulunnimi): Otsake(namen), arvo(arvo), taulu(taulunnimi)
+        Sarake(T &arvo, string namen, Taulu &taulunnimi): Otsake(namen), taulu(taulunnimi), arvo(arvo)
         //, tyyppi(typeid(T).name())
         {
             
         }
         
-        Sarake (Taulu &taulunnimi, string &namen): Otsake(namen), taulu(taulunnimi)
+        Sarake (Taulu &taulunnimi, string namen): Otsake(namen), taulu(taulunnimi)
         //, tyyppi(typeid(T).name())
         {
             
@@ -62,13 +62,16 @@ class Sarake: public Otsake
 
         }
         
+        T kerroArvo()
+        {
+            return arvo;
+        }
+        
         string tulosta() const
         {
-            std::stringstream ss;
+            stringstream ss;
             ss << arvo;
-            cout << "nimi: " << nimi;
             string paluu = ss.str();
-            cout << " arvo: " << arvo << endl;
             return paluu;        
         }
         

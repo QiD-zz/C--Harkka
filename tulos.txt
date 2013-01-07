@@ -6,3 +6,23 @@ Illegal command: INSERT INTO kuljettajat2 (nimi, talli, pisteet) VALUES ("M Schu
 
 Illegal command: INSERT INTO kuljettajat (nimike, talli, pisteet) VALUES ("C Pic", "Marussia", 0)
 
+    nimi     ÝG      61
+     LÞG     LÞG      61
+     ´ßG pisteet      53
+  "HRT",    nimi      49
+     |åG   talli      48
+     Ìƒ5     Ìƒ5      45
+     lƒ5     lƒ5      41
+     lƒ5     D‘5      35
+     \‘5     L’5      29
+     d’5     d’5      22
+     L’5     Ä®5      19
+     ´¨5     L®5      15
+     4®5     D­5       4
+     kuljettajat     ì­5       3
+     ®5     l÷5       2
+     T÷5     T÷5       2
+     $÷5     $÷5       0
+     <÷5     <÷5       0
+  "HRT",     ÔðG       0
+  "HRT",      0)       0

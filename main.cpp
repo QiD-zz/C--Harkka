@@ -153,7 +153,7 @@ int main(int argc, char** argv) {
                     }
                     if (tyyppi == CHAR)
                     {
-                        sarakkeet.push_back(new Sarake<char *>(tauluName, sarakeNimi));
+                        sarakkeet.push_back(new Sarake<string>(tauluName, sarakeNimi));
                     }
 
                 }
@@ -253,12 +253,12 @@ int main(int argc, char** argv) {
                      //  cout << "taulua ei ole??????\n";
                    }
 
-                   Taulu taulu;
+                   Taulu *taulu;
                    vector <Otsake *> taulunSarakkeet;
                    if (tauluOnOlemassa)
                    {
                       taulu = db.haeTaulu(taulunNimi);
-                      taulunSarakkeet = taulu.kerroSarakkeet();
+                      taulunSarakkeet = taulu->kerroSarakkeet();
                    }
                    
                    vector <Otsake *> uudetSarakkeet;
@@ -385,14 +385,16 @@ int main(int argc, char** argv) {
                                     {
                                        virheHavaittu = true;
                                     }
-                                    if (taulu.onkoSaraketta(sarakkeidenNimet[kierros]) == false)
+                                    if (taulu->onkoSaraketta(sarakkeidenNimet[kierros]) == false)
                                     {
                                         virheHavaittu = true;
                                     }
                                     if (virheHavaittu == false)
                                     {
-                                       // Sarake<float> *a = new Sarake<float>(flotu,sarakkeidenNimet[kierros], taulunNimi);
-                                        uudetSarakkeet.push_back(new Sarake<float>(flotu, sarakkeidenNimet[kierros], taulu));     
+                                        Sarake<float> *a = new Sarake<float>(flotu,sarakkeidenNimet[kierros], *taulu);
+                                        cout << "Sarake ennen: " << a->tulosta() << endl;
+                                        uudetSarakkeet.push_back(a);     
+                                        cout << "Sarake vectorissa: " << uudetSarakkeet[kierros]->tulosta() << endl;
                                     }
 
                                 } 
@@ -411,7 +413,7 @@ int main(int argc, char** argv) {
                                //         cout << "VIRHE INT\n";
                                        virheHavaittu = true;
                                     }
-                                    if (taulu.onkoSaraketta(sarakkeidenNimet[kierros]) == false)
+                                    if (taulu->onkoSaraketta(sarakkeidenNimet[kierros]) == false)
                                     {
                                         virheHavaittu = true;
                                     }
@@ -419,30 +421,34 @@ int main(int argc, char** argv) {
                                     if (virheHavaittu == false)
                                     {
 
-                                     //     Sarake<int> *a = new Sarake<int>(intLuku,sarakkeidenNimet[kierros], taulunNimi);
+                                          Sarake<int> *a = new Sarake<int>(intLuku,sarakkeidenNimet[kierros], *taulu);
+                                         cout << "Sarake ennen: " << a->tulosta() << endl;
 
-                                        uudetSarakkeet.push_back(new Sarake<int>(intLuku, sarakkeidenNimet[kierros], taulu));
+                                        uudetSarakkeet.push_back(a);
+                                        cout << "Sarake vectorissa: " << uudetSarakkeet[kierros]->tulosta() << endl;
                                     }
 
                                 } 
                                 if (eiInt && eiFloat)
                                 {                             
-                                    if (taulunSarakkeet[kierros]->tutkiTyyppi(typeid(arvoc).name()) != true)
+                                    if (taulunSarakkeet[kierros]->tutkiTyyppi(typeid(arvo).name()) != true)
                                     {
                               //          cout << arvoc << "\n";
                                 //        cout << "VIRHE CHAR " << typeid(arvoc).name() << " " << taulunSarakkeet[kierros]->kerroTyyppi() << "\n";
                                         virheHavaittu = true;
                                     }
-                                    if (taulu.onkoSaraketta(sarakkeidenNimet[kierros]) == false)
+                                    if (taulu->onkoSaraketta(sarakkeidenNimet[kierros]) == false)
                                     {
                                         virheHavaittu = true;
                                     }
                                     if (virheHavaittu == false)
                                     {
-                                       // Sarake<char *> *a = new Sarake<char *>(arvoc,sarakkeidenNimet[kierros], taulunNimi);
+                                        Sarake<string> *a = new Sarake<string>(arvo,sarakkeidenNimet[kierros], *taulu);
+                                         cout << "Sarake ennen: " << a->tulosta() << endl;
                                       //  cout << "MIKÄ MÄTTTÖTÖTÖTÖTÖTÖTÖTÖT:   " << arvoc << endl;
                                         char *arvi = const_cast<char *>(arvoc);
-                                        uudetSarakkeet.push_back(new Sarake<char *>(arvi, sarakkeidenNimet[kierros], taulu));
+                                        uudetSarakkeet.push_back(a);
+                                        cout << "Sarake vectorissa: " << uudetSarakkeet[kierros]->tulosta() << endl;
                                     }
                                 }
                            }
@@ -455,9 +461,9 @@ int main(int argc, char** argv) {
                        }
                        if (!virheHavaittu)
                        {
-                           taulu.lisaaRivi(uudetSarakkeet);
-                           Taulu *p = &taulu;
-                           db.muutaTaulua(p);
+                           taulu->lisaaRivi(uudetSarakkeet);
+          
+                           db.muutaTaulua(taulu);
                        }
                        
                        kokoKasky = "";

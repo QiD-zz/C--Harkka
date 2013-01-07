@@ -83,7 +83,7 @@ public:
         return false;
     }
     
-    Taulu haeTaulu(string nimi)
+    Taulu * haeTaulu(string nimi)
     {
         if (onkoTaulua(nimi))
         {
@@ -91,7 +91,7 @@ public:
                 Taulu *i = it.operator *();
                 if (i->kerroNimi() == nimi)
                 {
-                    return *i;
+                    return i;
                 }
             }
         }

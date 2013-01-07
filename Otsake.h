@@ -11,10 +11,10 @@
 using namespace std;
 
 class Otsake
-{
+{   
    
 public:
-    std::string nimi;
+    string nimi;
     Otsake()
     {
         
@@ -24,11 +24,11 @@ public:
     {
         
     }
-    
     Otsake(string &name): nimi(name)
     {   
 
     }
+    
     virtual const char * kerroTyyppi() const
         {
 

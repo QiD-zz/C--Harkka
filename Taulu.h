@@ -49,6 +49,12 @@ class Taulu
          // sarakkeet(toinen.sarakkeet),
          sarakkeet = toinen.sarakkeet;
      }
+     Taulu(const Taulu * toinen): nimi(toinen->nimi), koko(toinen->koko), sarakkeita(toinen->sarakkeita),  rivit(toinen->rivit), sarakkeet(toinen->sarakkeet)
+     {
+         // sarakkeet(toinen.sarakkeet),
+      //   sarakkeet = toinen->sarakkeet;
+     }
+     
      
   /*  Taulu(string name, Otsake *sarkat, int leveys): nimi(name), sarakkeet(sarkat)
     {
@@ -64,32 +70,19 @@ class Taulu
                 o.tulosta();
             }
     }*/
+   
     
     void lisaaRivi(vector <Otsake *> &rivi)
     {
      //   cout << "TÄÄLLÄKÖ KUSEE??\n";
         rivit.push_back(rivi);
         koko++;
+        for (int i = 0; i < rivi.size(); i++) {
+            cout << rivi.at(i)->tulosta();
 
-      //  cout << "mitk KUSEE??\n";
-     /*   if (koko > 0)
-        {
-            Otsake **temp = rivit;
-            delete [] rivit;
-            rivit[koko+1][sarakkeita];
-            for (int i = 0; i < koko; i++) {
-            rivit[i] = temp[i];
 
-            }
+        }
 
-            rivit[koko] = rivi;
-            koko++;
-        } else {
-            rivit[1][sarakkeita];
-            rivit[0] = rivi;
-            koko++;
-        }*/
-        
         
     }
     
